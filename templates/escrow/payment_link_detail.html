@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Payment Link Created!</h2>
+
+<div style="background: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h3>{{ transaction.product_name }}</h3>
+    <p><strong>Product Price:</strong> ₦{{ transaction.product_price }}</p>
+    <p><strong>Logistics Fee:</strong> ₦{{ transaction.logistics_fee }}</p>
+    <p><strong>Total:</strong> ₦{{ transaction.total_amount }}</p>
+    <p><strong>Status:</strong> {{ transaction.get_status_display }}</p>
+</div>
+
+<div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h4>📱 Share this payment link:</h4>
+    <div style="background: white; padding: 10px; border-radius: 4px; margin: 10px 0; word-break: break-all; font-family: monospace;">
+        {{ payment_url }}
+    </div>
+    <button onclick="copyToClipboard()" class="btn">Copy Link</button>
+</div>
+
+<div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h4>Next Steps:</h4>
+    <ol>
+        <li>Share the payment link with your buyer via WhatsApp/Instagram/SMS</li>
+        <li>Buyer pays and receives a confirmation code</li>
+        <li>Deliver the goods to the buyer</li>
+        <li>Buyer enters confirmation code to release your payment</li>
+    </ol>
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'create_payment_link' %}" class="btn">Create Another Link</a>
+    <a href="{% url 'home' %}" class="btn" style="background: #6c757d;">Home</a>
+</div>
+
+<script>
+function copyToClipboard() {
+    const text = "{{ payment_url }}";
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Payment link copied to clipboard!');
+    });
+}
+</script>
+{% endblock %}

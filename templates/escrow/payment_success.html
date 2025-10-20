@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>✅ Payment Successful!</h2>
+
+<div style="background: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h3>Your Confirmation Code:</h3>
+    <div style="font-size: 24px; font-weight: bold; color: #155724; text-align: center; padding: 10px; background: white; border-radius: 4px;">
+        {{ transaction.confirmation_code }}
+    </div>
+</div>
+
+<div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h4>Important Instructions:</h4>
+    <ol>
+        <li>Keep this confirmation code safe</li>
+        <li>Only share it when you receive your goods</li>
+        <li>Enter the code to release payment to the seller</li>
+    </ol>
+</div>
+
+<h3>Transaction Details:</h3>
+<p><strong>Product:</strong> {{ transaction.product_name }}</p>
+<p><strong>Amount Paid:</strong> ₦{{ transaction.total_amount }}</p>
+<p><strong>Status:</strong> Paid - Awaiting Delivery</p>
+
+<div style="margin-top: 30px;">
+    <a href="{% url 'confirm_delivery' transaction.id %}" class="btn">
+        Confirm Delivery (Use this when you receive your goods)
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Secure Payment</h2>
+
+<div style="border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 8px;">
+    <h3>{{ transaction.product_name }}</h3>
+    <p><strong>Product Price:</strong> ₦{{ transaction.product_price }}</p>
+    <p><strong>Logistics Fee:</strong> ₦{{ transaction.logistics_fee }}</p>
+    <hr>
+    <p><strong>Total Amount:</strong> ₦{{ transaction.total_amount }}</p>
+</div>
+
+<div style="background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h4>🔒 Your money is safe!</h4>
+    <p>• Payment is held in escrow until you confirm delivery</p>
+    <p>• You'll receive a confirmation code after payment</p>
+    <p>• Only confirm when you receive your goods</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="font-size: 18px; padding: 15px 30px;">
+        Pay ₦{{ transaction.total_amount }} Securely
+    </button>
+</form>
+
+<p style="margin-top: 20px; color: #666; font-size: 14px;">
+    This is a demo. In production, this would integrate with Paystack/Flutterwave.
+</p>
+{% endblock %}

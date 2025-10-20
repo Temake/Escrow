@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Confirm Delivery</h2>
+
+<div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;">
+    <h4>⚠️ Important!</h4>
+    <p>Only confirm delivery if you have received your goods and are satisfied with them.</p>
+    <p>Once confirmed, the payment will be immediately released to the seller.</p>
+</div>
+
+<h3>Transaction Details:</h3>
+<p><strong>Product:</strong> {{ transaction.product_name }}</p>
+<p><strong>Amount:</strong> ₦{{ transaction.total_amount }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Enter your confirmation code:</label>
+        <input type="text" name="confirmation_code" placeholder="6-digit code" maxlength="6" required>
+    </div>
+    
+    <button type="submit" class="btn">Confirm Delivery & Release Payment</button>
+    <a href="{% url 'home' %}" class="btn" style="background: #6c757d;">Cancel</a>
+</form>
+{% endblock %}

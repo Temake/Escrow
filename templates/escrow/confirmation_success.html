@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 40px 0;">
+    <h2>✅ Transaction Complete!</h2>
+    
+    <div style="background: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3>Payment Released Successfully</h3>
+        <p>The seller has received their payment. Thank you for using our escrow platform!</p>
+    </div>
+    
+    <a href="{% url 'home' %}" class="btn">Return to Home</a>
+</div>
+{% endblock %}
