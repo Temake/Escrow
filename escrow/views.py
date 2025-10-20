@@ -2,9 +2,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
+
+from escrow.forms import UserRegForm
 from .models import EscrowTransaction, Seller
 import random
 import string
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 def home(request):
     """Landing page"""
@@ -25,7 +31,6 @@ def create_payment_link(request):
             defaults={'phone': request.POST.get('seller_phone', '')}
         )
         
-        # Create transaction
         transaction = EscrowTransaction.objects.create(
             seller=seller,
             product_name=product_name,
@@ -98,3 +103,45 @@ def payment_link_detail(request, transaction_id):
         'transaction': transaction,
         'payment_url': payment_url
     })
+
+def SignUp(request):
+    if request.method == 'GET':
+        return render(request, 'escrow/signup.html')
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+    
+        has_error = False
+        
+        if not username:
+            messages.error(request, 'Username cannot be empty.')
+            has_error = True
+            
+        if not email:
+            messages.error(request, 'Email cannot be empty.')
+            has_error = True
+            
+        if not password:
+            messages.error(request, 'Password cannot be empty.')
+            has_error = True
+            
+        if password != password2:
+            messages.error(request, 'Passwords do not match.')
+            has_error = True
+            
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists.')
+            has_error = True
+            
+        if len(password or '') < 6:  
+            messages.error(request, 'Password must be at least 6 characters long.')
+            has_error = True
+      
+        if not has_error:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            messages.success(request, 'User registered successfully!')
+            return redirect('home')
+    
+    return render(request, 'escrow/signup.html')
