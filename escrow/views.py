@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.http import JsonResponse
-
+from django.contrib.auth import authenticate, login
 from escrow.forms import UserRegForm
 from .models import EscrowTransaction, Seller
 import random
@@ -96,8 +97,8 @@ def payment_link_detail(request, transaction_id):
     """Show payment link details to seller"""
     transaction = get_object_or_404(EscrowTransaction, id=transaction_id)
     
-    # Generate shareable payment link
-    payment_url = request.build_absolute_uri(f'/pay/{transaction.id}/')
+  
+    payment_url = request.build_absolute_url(f'/pay/{transaction.id}/')
     
     return render(request, 'escrow/payment_link_detail.html', {
         'transaction': transaction,
@@ -106,6 +107,8 @@ def payment_link_detail(request, transaction_id):
 
 def SignUp(request):
     if request.method == 'GET':
+        storage = get_messages(request)
+        storage.used = True
         return render(request, 'escrow/signup.html')
     elif request.method == 'POST':
         username = request.POST.get('username')
@@ -134,6 +137,9 @@ def SignUp(request):
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Username already exists.')
             has_error = True
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already registered.')
+            has_error = True
             
         if len(password or '') < 6:  
             messages.error(request, 'Password must be at least 6 characters long.')
@@ -142,6 +148,30 @@ def SignUp(request):
         if not has_error:
             user = User.objects.create_user(username=username, email=email, password=password)
             messages.success(request, 'User registered successfully!')
-            return redirect('home')
+            return redirect('login')
     
     return render(request, 'escrow/signup.html')
+
+
+def SignIn(request):
+    if request.method == 'GET':
+        storage = get_messages(request)
+        storage.used = True
+        return render(request, 'escrow/login.html')
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        try:
+            user = User.objects.get(email=email)
+            authenticated_user = authenticate(request, username=user.username, password=password)
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                messages.success(request, 'Logged in successfully!')
+                return redirect('home')
+            else:
+                messages.error(request, 'Invalid email or password.')
+        except User.DoesNotExist:
+            user = None
+            messages.error(request, 'Invalid email or password.')
+
+    return render(request, 'escrow/login.html')
