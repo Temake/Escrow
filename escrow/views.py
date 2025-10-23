@@ -60,14 +60,14 @@ def payment_page(request, transaction_id):
         transaction.status = 'paid'
         transaction.save()
         
-        # In real app, send SMS/email with confirmation code
+
         messages.success(request, f'Payment successful! Your confirmation code: {confirmation_code}')
         return redirect('payment_success', transaction_id=transaction.id)
     
     return render(request, 'escrow/payment_page.html', {'transaction': transaction})
 
 def payment_success(request, transaction_id):
-    """Payment success page with confirmation code"""
+
     transaction = get_object_or_404(EscrowTransaction, id=transaction_id)
     return render(request, 'escrow/payment_success.html', {'transaction': transaction})
 
@@ -96,10 +96,10 @@ def confirmation_success(request):
 def payment_link_detail(request, transaction_id):
     """Show payment link details to seller"""
     transaction = get_object_or_404(EscrowTransaction, id=transaction_id)
-    
-  
-    payment_url = request.build_absolute_url(f'/pay/{transaction.id}/')
-    
+
+
+    payment_url = request.build_absolute_uri(f'/pay/{transaction.id}/')
+
     return render(request, 'escrow/payment_link_detail.html', {
         'transaction': transaction,
         'payment_url': payment_url
