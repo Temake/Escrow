@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Seller Dashboard</h1>
+    
+    <div class="seller-info">
+        <h3>Your Account</h3>
+        <p><strong>Name:</strong> {{ seller.user.username }}</p>
+        <p><strong>Phone:</strong> {{ seller.phone }}</p>
+        <p><strong>Bank Account:</strong> {{ seller.bank_account }}</p>
+        {% if seller.bank_name %}
+        <p><strong>Bank:</strong> {{ seller.bank_name }}</p>
+        {% endif %}
+        <p><strong>Total Earnings:</strong> ₦{{ seller.total_earnings|floatformat:2 }}</p>
+    </div>
+    
+    <hr>
+    
+    <div class="actions">
+        <a href="{% url 'create_payment_link' %}" class="btn btn-primary">Create New Payment Link</a>
+    </div>
+    
+    <hr>
+    
+    <h3>Your Transactions</h3>
+    
+    {% if transactions %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Platform Fee</th>
+                <th>You Receive</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.product_name }}</td>
+                <td>₦{{ transaction.product_price|floatformat:2 }}</td>
+                <td>₦{{ transaction.platform_fee|floatformat:2 }}</td>
+                <td>₦{{ transaction.seller_amount|floatformat:2 }}</td>
+                <td>
+                    <span class="badge 
+                        {% if transaction.status == 'confirmed' %}badge-success
+                        {% elif transaction.status == 'paid' %}badge-warning
+                        {% elif transaction.status == 'refunded' %}badge-danger
+                        {% else %}badge-secondary{% endif %}">
+                        {{ transaction.get_status_display }}
+                    </span>
+                </td>
+                <td>{{ transaction.created_at|date:"M d, Y" }}</td>
+                <td>
+                    {% if transaction.status == 'pending' %}
+                    <a href="{% url 'payment_link_detail' transaction.id %}" class="btn btn-sm btn-info">View Link</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No transactions yet. Create your first payment link to get started!</p>
+    {% endif %}
+</div>
+{% endblock %}
