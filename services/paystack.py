@@ -21,7 +21,7 @@ class PaystackService:
             data = {
                 'email': transaction.buyer_email or 'buyer@example.com',
                 'amount': amount_in_kobo,
-                'reference': str(transaction.id),  # Use transaction UUID as reference
+                'reference': str(transaction.id),  
                 'callback_url': f"{settings.SITE_URL}/paystack/callback/",
                 'metadata': {
                     'transaction_id': str(transaction.id),
