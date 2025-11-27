@@ -11,7 +11,6 @@ class PaystackService:
         self.paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
     
     def initialize_payment(self, transaction):
-        """Initialize payment with Paystack"""
         try:
             
             total_amount = float(transaction.product_price) + float(transaction.logistics_fee)
@@ -76,9 +75,8 @@ class PaystackService:
             }
     
     def verify_webhook_signature(self, payload, signature):
-        """Verify webhook signature for security"""
         if not settings.PAYSTACK_WEBHOOK_SECRET:
-            return True  # Skip verification if no secret is set
+            return True 
             
         expected_signature = hmac.new(
             settings.PAYSTACK_WEBHOOK_SECRET.encode('utf-8'),

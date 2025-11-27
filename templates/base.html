@@ -4,31 +4,167 @@
     <title>Escrow Platform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
-        .btn { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; text-decoration: none; display: inline-block; margin: 5px; }
-        .btn:hover { background: #0056b3; }
-        .form-group { margin: 15px 0; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .messages { margin: 15px 0; }
-        .alert { padding: 10px; border-radius: 4px; margin: 10px 0; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        :root {
+            --brand:#111c2d;
+            --brand-accent:#0b5cff;
+            --brand-mint:#c6ffe0;
+            --text:#0b0d12;
+            --muted:#5c6474;
+            --border:#dde2eb;
+            --card:#ffffff;
+            --bg:#f6f8fb;
+        }
+        * { box-sizing:border-box; }
+        body {
+            margin:0;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.6;
+        }
+        a { color:var(--brand-accent); text-decoration:none; }
+        header {
+            background:var(--card);
+            border-bottom:1px solid var(--border);
+            position:sticky;
+            top:0;
+            z-index:10;
+        }
+        .nav {
+            max-width:1180px;
+            margin:0 auto;
+            padding:16px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+        .brand {
+            font-weight:700;
+            font-size:1.1rem;
+            letter-spacing:0.02em;
+            color:var(--brand);
+        }
+        .nav-links { display:flex; gap:20px; align-items:center; }
+        .nav-links a { color:var(--muted); font-size:0.95rem; }
+        .nav-links a:hover { color:var(--brand-accent); }
+        .page-shell {
+            padding:32px 16px 64px;
+        }
+        .container {
+            max-width:1180px;
+            margin:0 auto;
+            background:transparent;
+            padding:0;
+        }
+        .card {
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:18px;
+            padding:24px;
+            box-shadow:0 10px 30px rgba(15,23,42,0.08);
+        }
+        .btn {
+            display:inline-block;
+            padding:12px 22px;
+            border-radius:999px;
+            border:1px solid transparent;
+            font-weight:600;
+            font-size:0.95rem;
+            transition:all .2s ease;
+            cursor:pointer;
+            background:var(--brand-accent);
+            color:#fff;
+        }
+        .btn:hover { filter:brightness(0.92); }
+        .btn-outline {
+            background:rgba(11,92,255,0.08);
+            color:var(--brand-accent);
+            border-color:rgba(11,92,255,0.2);
+        }
+        .messages { margin-bottom:24px; }
+        .alert {
+            padding:12px 18px;
+            border-radius:12px;
+            margin:8px 0;
+            font-size:0.95rem;
+        }
+        .alert-success { background:#d5f5e3; color:#0f5132; }
+        .alert-error { background:#fde2e1; color:#842029; }
+        .grid { display:grid; gap:20px; }
+        @media (min-width:900px) {
+            .grid-3 { grid-template-columns:repeat(3,1fr); }
+            .grid-2 { grid-template-columns:repeat(2,1fr); }
+        }
+        .section-label {
+            text-transform:uppercase;
+            font-size:0.75rem;
+            letter-spacing:0.2em;
+            color:var(--muted);
+        }
+        .tag {
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            background:var(--brand-mint);
+            color:#0c3c1f;
+            padding:6px 14px;
+            border-radius:999px;
+            font-size:0.85rem;
+            font-weight:600;
+        }
+        form { width:100%; }
+        .form-layout {
+            display:grid;
+            gap:24px;
+        }
+        .form-group { display:flex; flex-direction:column; gap:6px; }
+        label { font-weight:600; font-size:0.9rem; color:var(--brand); }
+        input {
+            padding:12px 14px;
+            border-radius:12px;
+            border:1px solid var(--border);
+            font-size:1rem;
+            background:#fff;
+        }
+        input:focus {
+            outline:2px solid rgba(11,92,255,0.3);
+            border-color:var(--brand-accent);
+        }
+        footer {
+            text-align:center;
+            padding:32px;
+            font-size:0.85rem;
+            color:var(--muted);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-        
-        {% block content %}
-        {% endblock %}
+    <header>
+        <div class="nav">
+            <a class="brand" href="{\% url 'home' \%}">Escrow in 15 Minutes</a>
+            <nav class="nav-links">
+                <a href="{\% url 'home' \%}">Product</a>
+                <a href="{\% url 'create_payment_link' \%}">Create Link</a>
+                <a href="{\% url 'login' \%}">Login</a>
+                <a href="{\% url 'register_seller' \%}" class="btn btn-outline">Get Started</a>
+            </nav>
+        </div>
+    </header>
+    <div class="page-shell">
+        <main class="container">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
     </div>
+    <footer>
+        Built for social sellers • Trust-first payments • {{ now|date:'Y' }}
+    </footer>
 </body>
 </html>
