@@ -1,170 +1,58 @@
+{% load django_vite %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en" class="h-full">
 <head>
-    <title>Escrow Platform</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        :root {
-            --brand:#111c2d;
-            --brand-accent:#0b5cff;
-            --brand-mint:#c6ffe0;
-            --text:#0b0d12;
-            --muted:#5c6474;
-            --border:#dde2eb;
-            --card:#ffffff;
-            --bg:#f6f8fb;
-        }
-        * { box-sizing:border-box; }
-        body {
-            margin:0;
-            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-            background:var(--bg);
-            color:var(--text);
-            line-height:1.6;
-        }
-        a { color:var(--brand-accent); text-decoration:none; }
-        header {
-            background:var(--card);
-            border-bottom:1px solid var(--border);
-            position:sticky;
-            top:0;
-            z-index:10;
-        }
-        .nav {
-            max-width:1180px;
-            margin:0 auto;
-            padding:16px 24px;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-        }
-        .brand {
-            font-weight:700;
-            font-size:1.1rem;
-            letter-spacing:0.02em;
-            color:var(--brand);
-        }
-        .nav-links { display:flex; gap:20px; align-items:center; }
-        .nav-links a { color:var(--muted); font-size:0.95rem; }
-        .nav-links a:hover { color:var(--brand-accent); }
-        .page-shell {
-            padding:32px 16px 64px;
-        }
-        .container {
-            max-width:1180px;
-            margin:0 auto;
-            background:transparent;
-            padding:0;
-        }
-        .card {
-            background:var(--card);
-            border:1px solid var(--border);
-            border-radius:18px;
-            padding:24px;
-            box-shadow:0 10px 30px rgba(15,23,42,0.08);
-        }
-        .btn {
-            display:inline-block;
-            padding:12px 22px;
-            border-radius:999px;
-            border:1px solid transparent;
-            font-weight:600;
-            font-size:0.95rem;
-            transition:all .2s ease;
-            cursor:pointer;
-            background:var(--brand-accent);
-            color:#fff;
-        }
-        .btn:hover { filter:brightness(0.92); }
-        .btn-outline {
-            background:rgba(11,92,255,0.08);
-            color:var(--brand-accent);
-            border-color:rgba(11,92,255,0.2);
-        }
-        .messages { margin-bottom:24px; }
-        .alert {
-            padding:12px 18px;
-            border-radius:12px;
-            margin:8px 0;
-            font-size:0.95rem;
-        }
-        .alert-success { background:#d5f5e3; color:#0f5132; }
-        .alert-error { background:#fde2e1; color:#842029; }
-        .grid { display:grid; gap:20px; }
-        @media (min-width:900px) {
-            .grid-3 { grid-template-columns:repeat(3,1fr); }
-            .grid-2 { grid-template-columns:repeat(2,1fr); }
-        }
-        .section-label {
-            text-transform:uppercase;
-            font-size:0.75rem;
-            letter-spacing:0.2em;
-            color:var(--muted);
-        }
-        .tag {
-            display:inline-flex;
-            align-items:center;
-            gap:6px;
-            background:var(--brand-mint);
-            color:#0c3c1f;
-            padding:6px 14px;
-            border-radius:999px;
-            font-size:0.85rem;
-            font-weight:600;
-        }
-        form { width:100%; }
-        .form-layout {
-            display:grid;
-            gap:24px;
-        }
-        .form-group { display:flex; flex-direction:column; gap:6px; }
-        label { font-weight:600; font-size:0.9rem; color:var(--brand); }
-        input {
-            padding:12px 14px;
-            border-radius:12px;
-            border:1px solid var(--border);
-            font-size:1rem;
-            background:#fff;
-        }
-        input:focus {
-            outline:2px solid rgba(11,92,255,0.3);
-            border-color:var(--brand-accent);
-        }
-        footer {
-            text-align:center;
-            padding:32px;
-            font-size:0.85rem;
-            color:var(--muted);
-        }
-    </style>
+    <title>{% block title %}Escrow | Trusted Links{% endblock %}</title>
+   {% vite_hmr_client %}
+
+   {% vite_asset 'static/js/main.js' %}
 </head>
-<body>
-    <header>
-        <div class="nav">
-            <a class="brand" href="{\% url 'home' \%}">Escrow in 15 Minutes</a>
-            <nav class="nav-links">
-                <a href="{\% url 'home' \%}">Product</a>
-                <a href="{\% url 'create_payment_link' \%}">Create Link</a>
-                <a href="{\% url 'login' \%}">Login</a>
-                <a href="{\% url 'register_seller' \%}" class="btn btn-outline">Get Started</a>
-            </nav>
-        </div>
-    </header>
-    <div class="page-shell">
-        <main class="container">
+<body class="min-h-screen bg-slate-950 text-slate-100">
+    <div class="relative isolate overflow-hidden">
+        <div class="pointer-events-none absolute inset-0 -z-10 bg-linear-to-br from-slate-900 via-slate-950 to-black"></div>
+        <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-64 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.25),transparent_55%)]"></div>
+        <header class="border-b border-white/10 bg-black/30 backdrop-blur">
+            <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+                <div>
+                    <a href="{% url 'home' %}" class="flex items-center gap-2 text-lg font-semibold tracking-tight">
+                        <span class="text-cyan-300">Escrow</span>
+                        <span class="text-white/70">· Trust in 15 mins</span>
+                    </a>
+                </div>
+                <nav class="flex items-center gap-4 text-sm font-medium text-white/70">
+                    <a href="{% url 'home' %}" class="hover:text-white transition">Product</a>
+                    <a href="{% url 'create_payment_link' %}" class="hover:text-white transition">Create Link</a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'seller_dashboard' %}" class="hover:text-white transition">Dashboard</a>
+                        <a href="{% url 'logout' %}" class="rounded-full border border-white/30 px-4 py-1.5 text-sm text-white hover:border-white">Logout</a>
+                    {% else %}
+                        <a href="{% url 'signin' %}" class="hover:text-white transition">Login</a>
+                        <a href="{% url 'register_seller' %}" class="rounded-full bg-cyan-400/90 px-4 py-1.5 text-sm font-semibold text-slate-900 hover:bg-cyan-300">Start Free</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </header>
+
+        <main class="mx-auto w-full max-w-7xl px-4 py-10">
             {% if messages %}
-                <div class="messages">
+                <div class="mb-6 space-y-3">
                     {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                 </div>
             {% endif %}
-            {% block content %}
-            {% endblock %}
+
+            {% block content %}{% endblock %}
         </main>
+
+        <footer class="border-t border-white/5 bg-black/30 py-6 text-center text-xs text-white/60">
+            Built for social sellers · Escrow in 15 minutes · {% now 'Y' %}
+        </footer>
     </div>
-    <footer>
-        Built for social sellers • Trust-first payments • {{ now|date:'Y' }}
-    </footer>
 </body>
 </html>

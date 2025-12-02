@@ -1,0 +1,28 @@
+{
+  "name": "escrow",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Temake/Escrow#readme",
+  "bugs": {
+    "url": "https://github.com/Temake/Escrow/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Temake/Escrow.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "vite.config.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "vite": "^7.2.4"
+  }
+}

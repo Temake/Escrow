@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import os
 
 from pathlib import Path
 from decouple import config
@@ -39,14 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'escrow',
-    "tailwind",
-    'theme',
+    'django_vite',
+  
 ]
 
-
-TAILWIND_APP_NAME = "theme"
-
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": False
+  }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +61,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+
+
 
 TEMPLATES = [
     {
@@ -126,6 +131,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+  BASE_DIR / "assets"
+]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

@@ -1,19 +1,160 @@
 {% extends 'base.html' %}
 
+
+
+{% block title %}Escrow · Quick Trusted Payments{% endblock %}
+
 {% block content %}
-<h1>Escrow Platform</h1>
-<p>The Calendly of Trusted Payments for Social Commerce</p>
+<section class="grid gap-12 lg:grid-cols-2">
+    <div class="space-y-8">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.3em] text-cyan-200">
+            Escrow in 15 minutes
+        </span>
+        <div class="space-y-4">
+            <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+                Quick escrow links for trust-first social commerce
+            </h1>
+            <p class="text-lg text-white/70">
+                Buyers keep their money safe, sellers stop losing logistics fees. Create a trusted link, get paid via Paystack, release only when the buyer confirms delivery.
+            </p>
+        </div>
+        <ul class="grid gap-3 text-white/80 sm:grid-cols-2">
+            <li class="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                Seller onboarding in under 3 steps
+            </li>
+            <li class="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                Logistics fee auto-protected
+            </li>
+            <li class="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                Confirmation-code release system
+            </li>
+            <li class="flex items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                Refund logic after 3 days
+            </li>
+        </ul>
 
-<div style="margin: 30px 0;">
-    <a href="{% url 'create_payment_link' %}" class="btn">Create Payment Link</a>
-    <a href="{% url 'admin:index' %}" class="btn">Admin</a>
-</div>
+        <div class="flex flex-wrap gap-4">
+            <a href="{% url 'create_payment_link' %}" class="inline-flex items-center justify-center rounded-full bg-cyan-400/90 px-6 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 transition hover:bg-cyan-300">
+                Create a payment link
+            </a>
+            <a href="{% url 'register_seller' %}" class="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white/80 hover:border-white/40">
+                Set up seller account
+            </a>
+        </div>
 
-<h3>How it works:</h3>
-<ol>
-    <li><strong>Seller:</strong> Create a secure payment link</li>
-    <li><strong>Buyer:</strong> Pay safely with funds held in escrow</li>
-    <li><strong>Delivery:</strong> Buyer receives confirmation code</li>
-    <li><strong>Release:</strong> Buyer confirms delivery to release payment</li>
-</ol>
+        <div class="flex flex-wrap gap-6 text-sm text-white/60">
+            <div>
+                <p class="text-3xl font-semibold text-white">2-3%</p>
+                <p>Platform fee (seller decides who pays)</p>
+            </div>
+            <div>
+                <p class="text-3xl font-semibold text-white">100%</p>
+                <p>Logistics fee released immediately</p>
+            </div>
+            <div>
+                <p class="text-3xl font-semibold text-white">3 days</p>
+                <p>Escrow lock before refunds</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="rounded-4xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+        <div class="rounded-3xl border border-white/10 bg-black/20 p-6">
+            <div class="space-y-6">
+                <div>
+                    <p class="text-sm uppercase tracking-wider text-white/60">Seller Flow</p>
+                    <h3 class="text-2xl font-semibold">Set up in under 3 minutes</h3>
+                </div>
+                <ol class="space-y-5 text-white/80">
+                    <li class="flex gap-4">
+                        <span class="text-sm font-semibold text-cyan-300">01</span>
+                        <div>
+                            <p class="font-medium text-white">Basic profile only</p>
+                            <p class="text-sm text-white/60">Name · Phone · Bank account</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="text-sm font-semibold text-cyan-300">02</span>
+                        <div>
+                            <p class="font-medium text-white">Create link</p>
+                            <p class="text-sm text-white/60">Product + price + logistics fee + optional buyer contact</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <span class="text-sm font-semibold text-cyan-300">03</span>
+                        <div>
+                            <p class="font-medium text-white">Share instantly</p>
+                            <p class="text-sm text-white/60">Send via WhatsApp, IG DM, SMS</p>
+                        </div>
+                    </li>
+                </ol>
+                <div class="rounded-2xl border border-white/10 bg-cyan-400/10 p-4 text-sm text-white/80">
+                    Buyer pays via Paystack → receives confirmation code → money releases only after code match.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-16 grid gap-6 lg:grid-cols-3">
+    {% for card in cards %}
+    <article class="rounded-3xl border border-white/5 bg-white/5 p-6 shadow-xl shadow-black/30">
+        <h4 class="text-xl font-semibold text-white">{{ card.title }}</h4>
+        <p class="mt-2 text-sm text-white/70">{{ card.copy }}</p>
+    </article>
+     {% endfor %}
+</section>
+
+<section class="mt-16 rounded-4xl border border-white/10 bg-black/30 p-8">
+    <div class="grid gap-10 lg:grid-cols-2">
+        <div class="space-y-4">
+            <p class="text-xs uppercase tracking-[0.3em] text-cyan-200">Ship the smallest loop</p>
+            <h3 class="text-3xl font-semibold">Payment link → Pay → Code → Release</h3>
+            <p class="text-white/70">Everything is optimized to keep this loop under 15 minutes. No dashboards, no clunky onboarding—just enough structure to remove risk for both sides.</p>
+            <div class="space-y-3 text-sm text-white/70">
+                <p>⚡ Sellers close deals faster on socials</p>
+                <p>🛡️ Buyers know money stays safe until delivery</p>
+                <p>💸 Platform fee stays tiny (2–3%) and transparent</p>
+            </div>
+        </div>
+        <div class="space-y-8">
+            <div class="grid gap-4 md:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p class="text-xs text-white/60">Buyer view</p>
+                    <p class="text-lg font-semibold">Total price: ₦75,000</p>
+                    <p class="text-sm text-white/60">Product ₦70k · Logistics ₦5k</p>
+                    <p class="mt-3 text-xs text-white/60">Escrow rules shown upfront</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p class="text-xs text-white/60">Seller payout</p>
+                    <p class="text-lg font-semibold">Receives ₦73,250</p>
+                    <p class="text-sm text-white/60">Product (−2.5%) + full logistics</p>
+                    <p class="mt-3 text-xs text-white/60">No hidden charges</p>
+                </div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p class="text-xs uppercase tracking-[0.3em] text-white/60">Anti-scam promise</p>
+                <p class="mt-2 text-sm text-white/80">If buyer never confirms, funds stay locked for 2 days + 1 day grace, then auto-refund (minus logistics). Everyone knows the rules ahead.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-16 flex flex-wrap items-center justify-between gap-6 rounded-4xl border border-white/10 bg-linear-to-r from-cyan-500/20 to-blue-500/20 px-8 py-10">
+    <div>
+        <p class="text-xs uppercase tracking-[0.4em] text-white/70">Launch plan</p>
+        <h3 class="mt-2 text-2xl font-semibold">First 5 transactions are free. Build trust, then scale.</h3>
+        <p class="mt-2 text-sm text-white/70">Ideal for WhatsApp/Instagram sellers on campus or micro-shops.</p>
+    </div>
+    <div class="flex flex-col gap-3 text-sm">
+        <a href="{% url 'register_seller' %}" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 font-semibold text-slate-900 shadow-lg shadow-cyan-500/30">
+            Create seller account
+        </a>
+        <a href="{% url 'login' %}" class="text-center text-white/70 hover:text-white">Already selling? Log in →</a>
+    </div>
+</section>
 {% endblock %}

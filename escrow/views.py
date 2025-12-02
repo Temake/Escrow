@@ -20,8 +20,12 @@ paystack_service = PaystackService()
 
 
 def home(request):
-    """Landing page"""
-    return render(request, 'escrow/home.html')
+    cards= [
+        {'title': 'Trust-first checkout', 'copy': 'Crystal clear breakdown (product, logistics, rules) on every link so buyers feel safe instantly.'},
+        {'title': 'Escrow lock', 'copy': 'Funds stay in escrow until buyer confirms delivery. No shortcuts. No early withdrawals.'},
+        {'title': 'Logistics protected', 'copy': 'Logistics fee releases the moment payment hits, so riders and sellers never lose cash on failed deliveries.'}
+    ]
+    return render(request, 'escrow/home.html', {'cards': cards})
 
 @login_required
 def create_payment_link(request):

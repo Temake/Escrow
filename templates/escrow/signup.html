@@ -1,18 +1,48 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h2>Register as a Seller</h2>
-<form method="post">
-    {% csrf_token %}
-    <label for="id_username">Username:</label>
-    <input type="text" name="username" id="id_username" required><br>
-    <label for="id_email">Email:</label>
-    <input type="email" name="email" id="id_email" required><br>
-    <label for="id_password1">Password:</label>
-    <input type="password" name="password" id="id_password1" required><br>
-    <label for="id_password2">Confirm Password:</label>
-    <input type="password" name="password2" id="id_password2" required><br>
+{% block title %}Create Seller Account · Escrow{% endblock %}
 
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+{% block content %}
+<section class="grid gap-8 lg:grid-cols-2">
+    <div class="space-y-6">
+        <p class="text-xs uppercase tracking-[0.4em] text-cyan-200">Get verified fast</p>
+        <h1 class="text-4xl font-semibold text-white">Start selling with trust in under 15 minutes.</h1>
+        <p class="text-white/70">We only ask for the essentials so you can launch quickly: username, email, password, phone, and bank account (when creating your first link).</p>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <p class="text-sm font-semibold text-white">What you get</p>
+            <ul class="mt-4 space-y-3 text-sm text-white/70">
+                <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>Escrow links built for WhatsApp &amp; Instagram sales</li>
+                <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>Paystack checkout with branded confirmation screens</li>
+                <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>Logistics fee protection + auto-refund rules</li>
+            </ul>
+        </div>
+        <p class="text-sm text-white/60">Already selling? <a href="{% url 'login' %}" class="text-cyan-300 hover:text-cyan-200">Sign in instead →</a></p>
+    </div>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/30">
+        <h2 class="text-xl font-semibold text-white">Create your seller account</h2>
+        <p class="text-sm text-white/60">No hidden fees. Cancel anytime.</p>
+        <form method="post" class="mt-6 space-y-5">
+            {% csrf_token %}
+            <div>
+                <label for="id_username" class="text-sm font-medium text-white/80">Username</label>
+                <input type="text" name="username" id="id_username" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <div>
+                <label for="id_email" class="text-sm font-medium text-white/80">Email</label>
+                <input type="email" name="email" id="id_email" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <div>
+                <label for="id_password1" class="text-sm font-medium text-white/80">Password</label>
+                <input type="password" name="password" id="id_password1" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <div>
+                <label for="id_password2" class="text-sm font-medium text-white/80">Confirm password</label>
+                <input type="password" name="password2" id="id_password2" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <button type="submit" class="w-full rounded-2xl bg-cyan-400/90 px-4 py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-cyan-300">Create account</button>
+        </form>
+        <p class="mt-4 text-xs text-white/60">By continuing you agree to release funds only when buyers confirm with their secure code.</p>
+    </div>
+</section>
 {% endblock %}

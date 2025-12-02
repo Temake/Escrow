@@ -1,17 +1,36 @@
 {% extends 'base.html' %}
 
+{% block title %}Login · Escrow{% endblock %}
+
 {% block content %}
-<h2>Seller Login</h2>
-<form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="id_email">Email:</label>
-        <input type="email" name="email" id="id_email" required>
+<section class="grid gap-8 lg:grid-cols-2">
+    <div class="space-y-6">
+        <p class="text-xs uppercase tracking-[0.4em] text-cyan-200">Seller access</p>
+        <h1 class="text-4xl font-semibold text-white">Welcome back! Pick up where you left off.</h1>
+        <p class="text-white/70">Create new links, track escrow status, and release funds the instant buyers confirm delivery.</p>
+        <ul class="space-y-3 text-sm text-white/70">
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>View every transaction and confirmation code in one place.</li>
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>Logistics fee auto-releases—no more sunk delivery costs.</li>
+            <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>Escrow remains locked until your buyer approves the drop-off.</li>
+        </ul>
+        <p class="text-sm text-white/60">Need an account? <a href="{% url 'register_seller' %}" class="text-cyan-300 hover:text-cyan-200">Create one in minutes →</a></p>
     </div>
-    <div class="form-group">
-        <label for="id_password">Password:</label>
-        <input type="password" name="password" id="id_password" required>
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/30">
+        <h2 class="text-xl font-semibold text-white">Seller Login</h2>
+        <p class="text-sm text-white/60">Use the email you registered with.</p>
+        <form method="post" class="mt-6 space-y-5">
+            {% csrf_token %}
+            <div>
+                <label for="id_email" class="text-sm font-medium text-white/80">Email</label>
+                <input type="email" name="email" id="id_email" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <div>
+                <label for="id_password" class="text-sm font-medium text-white/80">Password</label>
+                <input type="password" name="password" id="id_password" required class="mt-2 w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder-white/30 focus:border-cyan-400 focus:outline-none">
+            </div>
+            <button type="submit" class="w-full rounded-2xl bg-cyan-400/90 px-4 py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-cyan-300">Login</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+</section>
 {% endblock %}
